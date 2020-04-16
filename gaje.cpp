@@ -7,11 +7,12 @@ using namespace std;
 struct book {
     char bookName[];
     char Genre[];
-	
 }
 
 void insert() {
-          
+    struct book input;
+	
+	
 }
 
 void menu()
