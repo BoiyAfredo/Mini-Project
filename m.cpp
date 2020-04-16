@@ -112,17 +112,24 @@ int main()
 		
 		switch(choice)
 		{
-			case'1':	cout << "Please enter the title of the book : ";
-						cin >> book;
-						insert(head, last, book);
-						break;
-			case'2':	remove(head, last);
-						break;
-			case'3':	showList(head);
-						break;
+			case'1':	
+			cout << "Please enter the title of the book : ";
+			cin >> book;
+			insert(head, last, book);
+			break;
+			case'2':
+
+			remove(head, last);
+
+			break;
+			case'3':
+
+			showList(head);
+
+			break;
 			default: cout << "System exit\nThank you\n"; 
 		}
 	} 
-	while(choice != '4');
+	while(1 > choice > 3 );
 	return 0;
 }
