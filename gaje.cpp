@@ -1,14 +1,44 @@
 #include <iostream>
 using namespace std;
-int main()
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+struct book {
+    char bookName[];
+    char Genre[];
+}
+
+void insert() {
+          
+}
+
+void menu()
 {
-	int x,y,z,n;
-	cout << "How much the orange that you have? ";
-	cin >> x;
-	cout << "How Much the boxx that you want?";
-	cin >> y;
-	z= x/y;
-	n= x%y;
-	cout << "The box is " << x <<" And the left is " << n <<endl;
-	return 0;
+   int choice;
+   cout<<"Welcome to your library management user interface"<<endl;
+   cout<<"What would you like to do?"<<endl;
+   cout<<"1. Give a new book\n2. Remove a book\n3. Check collections"<<endl;
+   cin>>choice;
+   switch (choice)
+   {
+   case '1':
+    insert();
+       break;
+
+   case '2':
+
+       break;
+   case '3':
+
+       break;
+
+   default:
+       break;
+   }
+}
+
+int main() {
+    menu();
+    return 0;
 }
