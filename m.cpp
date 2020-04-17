@@ -1,5 +1,8 @@
 #include<iostream>
+#include <bits/stdc++.h>
 #include<string>
+#include<fstream>
+#include <cstdlib>
 using namespace std;
 
 struct node
@@ -20,8 +23,11 @@ bool isEmpty(node *head)
 	if( head == NULL )
 		return true;
 	else
-		return false;	
+		return false;
 }
+
+
+
 char menu()
 {
 	char choice;
@@ -34,15 +40,20 @@ char menu()
 	cout << "4. Exit" << endl;
 	cout << "Choose the number: ";
 	cin >> choice;
-	return choice;	
+	cin.ignore();
+	return choice;
 }
 void insertAsFirstElement(node *&head, node *&last, string book)
 {
+    ofstream file;
+    file.open("bookData.txt", ios::app);
 	node *temp = new node;
 	temp->book = book;
 	temp->next = NULL;
 	head = temp;
 	last = temp;
+	file<<book<<endl;
+	file.close();
 
 }
 void insert(node *&head, node *&last, string book)
@@ -51,11 +62,15 @@ void insert(node *&head, node *&last, string book)
 		insertAsFirstElement(head, last, book);
 	else
 	{
+	    ofstream file;
+        file.open("bookData.txt", ios::app);
 		node *temp = new node;
 		temp->book = book;
 		temp->next = NULL;
 		last->next = temp;
 		last = temp;
+		file<<book<<endl;
+		file.close();
 
 	}
 }
@@ -63,31 +78,29 @@ void remove(node *&head, node *&last)
 {
 	if(isEmpty(head))
 		cout << "The list is already empty\n";
-		
-	
-	
+
 	else if(head == last)
 	{
 		delete head;
 		head == NULL;
 		last == NULL;
-		
+
 	}
 	else
 	{
 		node *temp = head;
 		head = head->next;
 		delete temp;
-		
+
 	cout <<"\n\n";
 	}
 }
 void showList(node *current)
 {
 	if(isEmpty(current))
-	
+
 		cout << "The list is empty\n";
-		
+
 	else
 	{
 		cout << "The list contains: \n";
@@ -105,24 +118,31 @@ int main()
 	node *last = NULL;
 	char choice;
 	string book;
-	
 	do
 	{
 		choice = menu();
-		
+
 		switch(choice)
 		{
-			case'1':	cout << "Please enter the title of the book : ";
-						cin >> book;
-						insert(head, last, book);
-						break;
-			case'2':	remove(head, last);
-						break;
-			case'3':	showList(head);
-						break;
-			default: cout << "System exit\nThank you\n"; 
+			case '1':
+			cout << "Please enter the title of the book : ";
+			getline(cin, book);
+			insert(head, last, book);
+			break;
+			case '2':
+
+			remove(head, last);
+
+			break;
+			case '3':
+
+			showList(head);
+
+			break;
+			default: cout << "System exit\nThank you\n";
+			return 0;
 		}
-	} 
-	while(choice != '4');
+	}
+	while(choice != 4 );
 	return 0;
 }
