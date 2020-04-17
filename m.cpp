@@ -12,7 +12,7 @@ struct node
 };
 
 bool isEmpty(node *head);
-char menu();
+int menu();
 void insertAsFirstElement(node *&head, node *&last, string book);
 void insert(node *&head, node *&last, string book);
 void remove(node *&head, node *&last);
@@ -28,9 +28,9 @@ bool isEmpty(node *head)
 
 
 
-char menu()
+int menu()
 {
-	char choice;
+	int choice;
 	cout << "\n<====================================================>" <<endl;
 	cout << "< Welcome to your library management user interface: >" << endl;
 	cout << "<====================================================>" <<endl;
@@ -69,12 +69,12 @@ void insert(node *&head, node *&last, string book)
 		temp->next = NULL;
 		last->next = temp;
 		last = temp;
-		file<<book<<endl;
+		file<<book<<'\n';
 		file.close();
 
 	}
 }
-void remove(node *&head, node *&last)
+void remove(node *&head, node *&last, string book)
 {
 	if(isEmpty(head))
 		cout << "The list is already empty\n";
@@ -91,32 +91,60 @@ void remove(node *&head, node *&last)
 		node *temp = head;
 		head = head->next;
 		delete temp;
-
+		
 	cout <<"\n\n";
 	}
 }
+
+void removeFromFile(const char *file, string item) {
+	string line;
+	ifstream infile(file);
+	ofstream outfile("temp.txt");
+	
+		while(getline(infile, line))
+		{
+			if(line != item){
+				outfile<<line<<'\n';
+			}
+
+		}
+		infile.close();
+		outfile.close();
+		remove(file);
+		rename("temp.txt", file);
+}
+
 void showList(node *current)
 {
+	string line;
+		ifstream infile("bookData.txt");
 	if(isEmpty(current))
-
-		cout << "The list is empty\n";
-
+		cout << "The linked list is empty, you havent made any entries of book this session\n";
+	
 	else
 	{
+		
 		cout << "The list contains: \n";
 		while(current != NULL)
 		{
 			cout << current->book << "->" ;
 			current = current->next;
 		}
+		
 	}
+	cout << "Library contains: \n";
+		while (getline(infile, line))
+		{
+			cout<<line<<"\n";
+		}
+		infile.close();
 }
 
 int main()
 {
 	node *head = NULL;
 	node *last = NULL;
-	char choice;
+	int choice;
 	string book;
 	do
 	{
@@ -124,20 +152,19 @@ int main()
 
 		switch(choice)
 		{
-			case '1':
+			case 1:
 			cout << "Please enter the title of the book : ";
 			getline(cin, book);
 			insert(head, last, book);
 			break;
-			case '2':
-
-			remove(head, last);
-
+			case 2:
+			remove(head, last, book);
+			cout << "Please enter the title of the book that you want to delete: ";
+			getline(cin, book);
+			removeFromFile("bookData.txt", book);
 			break;
-			case '3':
-
+			case 3:
 			showList(head);
-
 			break;
 			default: cout << "System exit\nThank you\n";
 			return 0;
